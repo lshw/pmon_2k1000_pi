@@ -481,7 +481,7 @@ md_getexcname(struct trapframe *tf)
 int
 md_ator(register_t *vp, char *p, int base)
 {
-#if __mips < 3
+#ifndef HAVE_QUAD
 	return(atob(vp,p,base));
 #else
 	return(llatob(vp, p, base));
