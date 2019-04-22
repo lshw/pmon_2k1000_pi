@@ -1102,6 +1102,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00004800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 1
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60000000
     sw      a0, 0x10(t3)
 
@@ -1163,6 +1170,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00005000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 2
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60100000
     sw      a0, 0x10(t3)
 
@@ -1211,6 +1225,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00005800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 4
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60200000
     sw      a0, 0x10(t3)
 
@@ -1259,6 +1280,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00006000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 8
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60300000
     sw      a0, 0x10(t3)
 
@@ -1362,6 +1390,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00006800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x10
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60000000
     sw      a0, 0x10(t3)
 
@@ -1422,6 +1457,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00007000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x20
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60100000
     sw      a0, 0x10(t3)
 
@@ -1540,6 +1582,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00009800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x400
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60000000
     sw      a0, 0x10(t3)
 
@@ -1600,6 +1649,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe0000a000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x800
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60100000
     sw      a0, 0x10(t3)
 
@@ -1718,6 +1774,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00007800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x40
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60000000
     sw      a0, 0x10(t3)
 
@@ -1779,6 +1842,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00008000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x80
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60100000
     sw      a0, 0x10(t3)
 
@@ -1897,6 +1967,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00008800
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x100
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60000000
     sw      a0, 0x10(t3)
 
@@ -1957,6 +2034,13 @@ cal_one_pcie_x8:
     sw      a1, 0x0(t3)
 
     dli     t3, 0x90000efe00009000
+#if defined(FORCE_PCIE_GEN1) &&  FORCE_PCIE_GEN1 & 0x200
+//pcie capability link control 2, target link speed(bit 3:0)
+    lw 	    a0, 0xa0(t3)
+    or	    a0, 3
+    xor     a0, 2
+    sw      a0, 0xa0(t3)
+#endif
     li      a0, 0x60100000
     sw      a0, 0x10(t3)
 
