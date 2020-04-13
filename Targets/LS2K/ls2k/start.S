@@ -1667,6 +1667,7 @@ LEAF(ls2k_version)
 	.set    mips32
 	li a0,0xbfc00000+ NVRAM_OFFS + VER_OFFS
 	lbu v0, (a0)
+	xor v0, 0x50
 	li a0, 2
 	sltu a0, v0, a0
 	beqz a0, 1f
