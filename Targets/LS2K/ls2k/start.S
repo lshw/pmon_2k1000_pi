@@ -204,42 +204,6 @@ stack = start - 0x4000		/* Place PMON stack below PMON start in RAM */
 	sw t2,0x0(t0)
 2:
 #endif
-	bal watchdog_close
-	nop
-#ifdef GPIO_PINS
-	li	v0, 0xbfe10420
-	ld	v1, (v0)
-	dli	a0, LS2K_SELGPIO
-	or	v1, a0
-	xor	v1, a0
-	sd	v1, (v0)
-#endif
-
-#ifdef GPIO_OUT_PINS
-	li v0, 0xbfe10500
-	ld v1, (v0)
-	dli a0, GPIO_OUT_PINS
-	or v1, a0
-	xor v1, a0
-	sd v1, (v0)
-#endif
-
-#ifdef GPIO_OUT_CLR
-	li v0, 0xbfe10500
-	ld v1, 0x10(v0)
-	dli a0, GPIO_OUT_CLR
-	or v1, a0
-	xor v1, a0
-	sd v1, 0x10(v0)
-#endif
-
-#ifdef GPIO_OUT_SET
-	li v0, 0xbfe10500
-	ld v1, 0x10(v0)
-	dli a0, GPIO_OUT_SET
-	or v1, a0
-	sd v1, 0x10(v0)
-#endif
 
 	/* init processor state at first*/
 /* NOTE!! Not more that 16 instructions here!!! Right now it's FULL! */
@@ -620,6 +584,44 @@ cp0_main:
         andi    t0, t0, 0x3ff
         bnez    t0, wait_for_smp
         nop
+
+	bal watchdog_close
+	nop
+
+#ifdef GPIO_PINS
+	li	v0, 0xbfe10420
+	ld	v1, (v0)
+	dli	a0, LS2K_SELGPIO
+	or	v1, a0
+	xor	v1, a0
+	sd	v1, (v0)
+#endif
+
+#ifdef GPIO_OUT_PINS
+	li v0, 0xbfe10500
+	ld v1, (v0)
+	dli a0, GPIO_OUT_PINS
+	or v1, a0
+	xor v1, a0
+	sd v1, (v0)
+#endif
+
+#ifdef GPIO_OUT_CLR
+	li v0, 0xbfe10500
+	ld v1, 0x10(v0)
+	dli a0, GPIO_OUT_CLR
+	or v1, a0
+	xor v1, a0
+	sd v1, 0x10(v0)
+#endif
+
+#ifdef GPIO_OUT_SET
+	li v0, 0xbfe10500
+	ld v1, 0x10(v0)
+	dli a0, GPIO_OUT_SET
+	or v1, a0
+	sd v1, 0x10(v0)
+#endif
 
 	bal 	tlb_init
 	nop
