@@ -145,3 +145,38 @@ LEAF(i2cread)
 	jr	ra
 	nop
 END(i2cread)
+
+
+LEAF(i2c_ls2k_write)
+//a0: i2caddr, a1: chip, a2: reg, a3: val
+#define cr  4(a0)
+#define dr  3(a0)
+#define sbi(v, reg) li v0, v; sb v0, reg;
+#define waitz(v, reg) 1: lbu v0, reg; and v0, v; bnez v0, 1b; nop;
+
+ sb a1, dr;
+ srl a1, 8
+ sbi(0x90, cr);
+ waitz(2, cr);
+ sb a1, dr;
+ srl a1, 8
+ sbi(0x10, cr);
+ waitz(2, cr);
+ sb a1, dr;
+ sbi(0x10, cr);
+ waitz(2, cr);
+ sbi(0x40, cr);
+ waitz(0x40, cr);
+ jr ra
+ nop
+END(i2c_ls2k_write)
+
+LEAF(i2c_ls2k_init)
+sbi(0, 2(a0))
+sbi(0x64, 0(a0))
+sbi(2, 1(a0))
+sbi(0x80, 2(a0))
+jr ra
+nop
+END(i2c_ls2k_init)
+

@@ -588,6 +588,11 @@ cp0_main:
 	bal watchdog_close
 	nop
 
+	li	t0, 0xbfe10420
+	lw	t2, 0x0(t0)
+	or	t2, 0xc00
+	sw	t2, 0x0(t0)
+
 #ifdef GPIO_PINS
 	li	v0, 0xbfe10420
 	ld	v1, (v0)
@@ -623,6 +628,30 @@ cp0_main:
 	sd v1, 0x10(v0)
 #endif
 
+
+	lui	t0, 0xba00
+	lui	t1, 0x1fe0
+	sw	t1, 0x1010(t0) /* config bar for APB */
+	lw	t2, 0x1004(t0)
+	ori	t2, t2, 0x2
+	sw	t2, 0x1004(t0)
+
+	//i2cs 1 0x24;m1 0x11 0xff;i2cs 1 0x30;m1 0xff 0xff'
+	li a0, 0xbfe01800
+	bal i2c_ls2k_init
+	nop
+	li a0, 0xbfe01800
+	li a1, 0xff1148
+	bal i2c_ls2k_write
+	nop
+	li a1, 0xff0060
+	bal i2c_ls2k_write
+	nop
+	li a1, 0xffff60
+	bal i2c_ls2k_write
+	nop
+
+
 	bal 	tlb_init
 	nop
 
@@ -641,12 +670,6 @@ cp0_main:
 	bal	beep_off//mtf
 	nop
 
-	lui	t0, 0xba00
-	lui	t1, 0x1fe0
-	sw	t1, 0x1010(t0) /* config bar for APB */
-	lw	t2, 0x1004(t0)
-	ori	t2, t2, 0x2
-	sw	t2, 0x1004(t0)
 
 #ifdef LOWPOWER
 	li v0, 0xbfc00000 + NVRAM_OFFS + SHUTDEV_OFFS
