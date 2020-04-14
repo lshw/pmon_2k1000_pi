@@ -433,8 +433,6 @@ static void init_pcidev(void)
 #endif
 #endif
 	*(volatile unsigned int *)0xbfe10428 &= ~(1<<19); /*disable usb prefetch*/
-	val = *(unsigned int *)0xbfe10420;
-	*(unsigned int *)0xbfe10420 = (val | 0xc000);//mtf, enable I2C1
 #ifdef ENABLE_ALL_SERIAL
 	*(volatile int *)0xbfe10428 |= 0x3fff; 
 #endif
