@@ -636,10 +636,20 @@ cp0_main:
 	ori	t2, t2, 0x2
 	sw	t2, 0x1004(t0)
 
+#ifdef I2CGPIO_INIT
 	//i2cs 1 0x24;m1 0x11 0xff;i2cs 1 0x30;m1 0xff 0xff'
 	li a0, 0xbfe01800
 	bal i2c_ls2k_init
 	nop
+
+	/*read i2cgpio, skip write if nack*/
+	li a0, 0xbfe01800
+	li a1, 0x1148
+	bal i2c_ls2k_read
+	nop
+	bnez v1, 1f
+	nop
+
 	li a0, 0xbfe01800
 	li a1, 0xff1148
 	bal i2c_ls2k_write
@@ -650,6 +660,8 @@ cp0_main:
 	li a1, 0xffff60
 	bal i2c_ls2k_write
 	nop
+1:
+#endif
 
 
 	bal 	tlb_init
