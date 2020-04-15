@@ -153,23 +153,57 @@ LEAF(i2c_ls2k_write)
 #define dr  3(a0)
 #define sbi(v, reg) li v0, v; sb v0, reg;
 #define waitz(v, reg) 1: lbu v0, reg; and v0, v; bnez v0, 1b; nop;
+#define check_nak(reg) lbu reg, cr;and reg,0x80;bnez reg, 2f;nop;
 
  sb a1, dr;
  srl a1, 8
  sbi(0x90, cr);
  waitz(2, cr);
+ check_nak(v1);
  sb a1, dr;
  srl a1, 8
  sbi(0x10, cr);
  waitz(2, cr);
+ check_nak(v1);
  sb a1, dr;
  sbi(0x10, cr);
  waitz(2, cr);
+ check_nak(v1);
+2:
  sbi(0x40, cr);
  waitz(0x40, cr);
  jr ra
  nop
 END(i2c_ls2k_write)
+
+LEAF(i2c_ls2k_read)
+//a0: i2caddr, a1: chip, a2: reg, a3: val
+ or v0, a1, 1
+ sll v0, 16
+ or a1, v0
+ sb a1, dr;
+ srl a1, 8
+ sbi(0x90, cr);
+ waitz(2, cr);
+ check_nak(v1);
+ sb a1, dr;
+ srl a1, 8
+ sbi(0x10, cr);
+ waitz(2, cr);
+ check_nak(v1);
+ sb a1, dr;
+ sbi(0x90, cr);
+ waitz(2, cr);
+ sbi(0x28, cr);
+ waitz(2, cr);
+ lbu a1, dr
+2:
+ sbi(0x40, cr);
+ waitz(0x40, cr);
+ move v0, a1
+ jr ra
+ nop
+END(i2c_ls2k_read)
 
 LEAF(i2c_ls2k_init)
 sbi(0, 2(a0))
