@@ -737,6 +737,69 @@ write_eeprom(csrbase, data, offset, words)
 }
 #endif
 
+static int pcie_max_dev(pcitag_t tag)
+{
+	int offset;
+	pcireg_t value;
+
+	if (pci_get_capability(0, tag, PCI_CAP_ID_EXP, &offset, &value)) {
+		if (((value>>20)&0xf)==4)
+			return 1;
+		else
+			return 32;
+	}
+	else
+		return 32;
+}
+
+int pci_list_bus(int bus, int maxdev, int reg, int count)
+{
+	unsigned int i, j, k, n, misc, val, vendor, class, busno, maxdev1;
+	pcitag_t tag0, tag;
+	if (bus >255)
+		return -1; 
+	for(i = 0; i<maxdev;i++) {
+		tag0 = _pci_make_tag(bus, i, 0);
+		vendor =  _pci_conf_readn(tag0, 0, 4);
+		if (vendor==0xffffffff)
+			continue;
+		misc =  _pci_conf_readn(tag0, 0xc, 4);
+		n = misc&0x800000?8:1;
+		for (j = 0; j < n; j++) {
+			tag = _pci_make_tag(bus, i, j);
+			vendor  = _pci_conf_readn(tag, 0, 4);
+			if (vendor==0xffffffff||vendor==0)
+				continue;
+			printf("%d\t %d\t %d:", bus, i, j);
+			for (k=0; k<count*4; k+=4) {
+				val = _pci_conf_readn(tag, reg + k, 4);
+				printf(" 0x%08x", val);
+			}
+			printf("\n");
+			class = _pci_conf_readn(tag, 8, 4);
+			if ((class&0xffff0000)!=0x06040000 && (class&0xffff0000)!=0x0b300000)
+				continue;
+			val = _pci_conf_readn(tag, 0x18, 4);
+			busno =  (val>>8)&0xff;
+			maxdev1 = pcie_max_dev(tag);
+			if (busno!=0)
+				pci_list_bus(busno, maxdev1, reg, count);
+		}
+	}
+	return 0;
+}
+
+static int cmd_lspci(int argc, char **argv)
+{
+	int bus, maxdev, reg, count;
+	bus = argc>1?strtoul(argv[1], 0, 0):0;
+	maxdev = argc>2?strtoul(argv[2], 0, 0):32;
+	reg = argc>3?strtoul(argv[3], 0, 0):0;
+	count = argc>4?strtoul(argv[4], 0, 0):16;
+	pci_list_bus(bus, maxdev, reg, count);
+	return 0;
+}
+
 static const Cmd Cmds[] =
 {
 	{"Pci"},
@@ -752,6 +815,10 @@ static const Cmd Cmds[] =
 			cmd_pciscan_opts,
 			"scan pci bus",
 			cmd_pciscan, 1, 5, 0},
+	{"lspci",	"[bus [maxdev [reg [count]]]]",
+			0,
+			"scan pci bus",
+			cmd_lspci, 1, 4, 0},
 #ifdef ENABLE_FXPETH
 	{"fxpeth",	"[-b <bus>][-d <dev>][addr]",
 			cmd_fxp_opts,
