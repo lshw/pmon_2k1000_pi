@@ -358,12 +358,34 @@ select i2c
 #option DDR_PARAM_018="0x2020202016100000"
 #option DDR_RESET_REVERT
 #option NO_AUTO_TRFC
-#option GPIO_PINS="0xfffffffffff0000f"
-#option GPIO_OUT_PINS="0x01fff00000000000"
-#option  GPIO_OUT_SET="0x0f0b300000000000"
-#option  GPIO_OUT_CLR="0x10f4c00000000000"
+####main board
+#option    GPIO_PINS="0xfffff3ff7ff0000f"
+#option GPIO_OUT_PINS="0x1fff00000000000"
+#option    GPIO_OUT_SET="0xb300000000000"
+#option  GPIO_OUT_CLR="0x1f4c00000000000"
+###net board
+##option GPIO_PINS="0xfffff3f07ff00007"
+##option GPIO_OUT_PINS="0x1ffff3f07f000004"
+##option GPIO_OUT_SET="0x30a300000000000"
+##option GPIO_OUT_CLR="0x1cf5c3f07f000004"
+###
+####422 board
+###option GPIO_PINS="0xfffff3f07ff00007"
+###option GPIO_OUT_PINS="0x1ffff3f07f000004"
+###option GPIO_OUT_SET="0x30a300000000000"
+###option GPIO_OUT_CLR="0x1cf5c3f07f000004"
+###
+###can board
+##option GPIO_PINS="0xfffff3f07ff00007"
+##option GPIO_OUT_PINS="0x1ffff3f07f000004"
+##option GPIO_OUT_SET="0x30b300000000000"
+##option GPIO_OUT_CLR="0x1cf4c3f07f000004"
+#
 #option	LS2K_SELLIO
 #option	PCIE_LANE_FLIP=0
+#option CONFIG_UART0_SPLIT
+#option LS2K_USE_CAN
+
 
 #option CONFIG_VIDEO_LOGO
 #option CONFIG_VIDEO_BMP_LOGO
