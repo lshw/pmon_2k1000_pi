@@ -326,6 +326,9 @@ void initmips(unsigned long long  raw_memsz)
 	*(volatile int *)0xbfe10424 &= ~((1<<29)|(1<<23));
 	*(volatile int *)0xbfe104d0 &= ~(0x700);
 #endif
+#ifdef LS2K_USE_CAN
+	*(volatile int *)0xbfe10420 |= (3<<16);
+#endif
 
 	/*
 	 *  Probe clock frequencys so delays will work properly.
