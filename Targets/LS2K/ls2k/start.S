@@ -540,9 +540,8 @@ initregs:
  */
 locate:
 
-	la	s0, start
+	la	s0, uncached
 	subu	s0, ra, s0
-	and	s0, 0xffff0000
 
 	mfc0    t0, CP0_STATUS
 	li	t1, 0x64000000|SR_KX|SR_SX|SR_UX|SR_BOOT_EXC_VEC      # {cu3,cu2,cu1,cu0}<={0110, status_fr<=1,0xe0 to enable 64bit space
@@ -667,6 +666,7 @@ cp0_main:
 	bal 	tlb_init
 	nop
 
+#ifndef BOOT_FROM_EJTAG
 #ifdef HS0636
 	bal	HS0636_beep_on
 #else
@@ -681,10 +681,13 @@ cp0_main:
 	nop
 	bal	beep_off//mtf
 	nop
+#endif
 
 
 #ifdef LOWPOWER
-	li v0, 0xbfc00000 + NVRAM_OFFS + SHUTDEV_OFFS
+	la v0, start + NVRAM_OFFS + SHUTDEV_OFFS
+	addu v0, s0
+	//li v0, 0xbfc00000 + NVRAM_OFFS + SHUTDEV_OFFS
 	lbu t1, 3(v0)
 	xor t1, 0x5a
 	bnez t1, 1f
@@ -1236,7 +1239,9 @@ start_now:
 1:
 	and     ra, ra, t0
 	addiu   ra, ra, 16
+#ifndef BOOT_FROM_EJTAG
 	jr      ra      
+#endif
 	nop 
 	PRINTSTR("cache enable done\r\n")
 
@@ -1490,7 +1495,7 @@ bootnow:
 	nop
 #endif
 	la	a0, start
-	li	a1, 0xbfc00000
+	addu	a1, a0, s0
 	la	a2, _edata
 
 	move	t0, a0

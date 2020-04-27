@@ -96,7 +96,9 @@ ATTENTION:
 
 	li     	t0, 0xbfe10480
 	li	t1, (0x1 << 19) 	//power down pll L1 first
+#ifndef BOOT_FROM_EJTAG
 	sd	t1, 0x0(t0)
+#endif
 	dli	t1, /*(L1_LOOPC << 32) |*/ (L1_DIV << 42) | (L1_REFC << 26) | (0x3 << 10) | (0x1 << 7)
 
 	li v0, 0xbfc00000+NVRAM_OFFS+CPUFREQ_OFFS
