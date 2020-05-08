@@ -84,7 +84,7 @@ CPPFLAGS := ${CPPFLAGS} ${ENDIAN_FLAG}	${INCLUDES} ${IDENT} -D_KERNEL -D__OpenBS
 CWARNFLAGS=	-Wall -Wstrict-prototypes \
 		-Wno-uninitialized -Wno-format -Wno-main
 CFLAGS=		${DEBUG} ${CWARNFLAGS} ${OPT} -G 0
-AFLAGS=		-D_LOCORE -G 0
+AFLAGS=		${DEBUG} -D_LOCORE -G 0
 LFLAGS=	${ENDIAN_FLAG} -N -G 0 -T../../conf/ld.script -e start
 STRIPFLAGS=	-g -S --strip-debug
 
@@ -219,7 +219,7 @@ ${START}: ${TARGET}/${SUBTARGET}/${START:.o=.S} Makefile
 	${NORMAL_S}
 
 dtb:
-	${CC} ${AFLAGS} ${CPPFLAGS}  -E  -D__ASSEMBLY__ -D__DTS__ -x assembler-with-cpp -o $(DTB_O) $(DTB_I)
+	${CC} ${AFLAGS} ${CPPFLAGS}  -E  -D__ASSEMBLY__ -D__DTS__ -Ulinux -x assembler-with-cpp -o $(DTB_O) $(DTB_I)
 
 zpmon: startz.o
 	rm start.o && cp -f startz.o start.o
