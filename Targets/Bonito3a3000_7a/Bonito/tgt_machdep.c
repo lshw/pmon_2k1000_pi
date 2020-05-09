@@ -501,10 +501,14 @@ void tgt_devconfig()
     /* get dc base addr from pci config space */
 	superio_base = 0xb8000000;
 	superio_reinit();
+#elif defined(USE_LS3A_LPC)
+	superio_base = 0xbff00000;
+	superio_reinit();
+#endif
 #ifdef USE_SUPERIO_UART
 	{int i;
 	 int j;
-	 int uart[] = { 0xb80003f8, 0xb80002f8 };
+	 int uart[] = { superio_base  + 0x3f8, superio_base + 0x2f8 };
 
 		for(i=0,j=0;ConfigTable[i].devinfo;i++)
 		{
@@ -515,7 +519,6 @@ void tgt_devconfig()
 			}
 		}
 	}
-#endif
 #endif
 #if defined(VESAFB)
 	SBD_DISPLAY("VESA", 0);
