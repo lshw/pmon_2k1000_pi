@@ -264,7 +264,7 @@
 #define SDIO_SELGPIO ((!!((GPIO_PINS>>36)&0x3f))<<20)
 #define CAN1_SELGPIO ((!!((GPIO_PINS>>34)&0x3))<<17)
 #define CAN0_SELGPIO ((!!((GPIO_PINS>>32)&0x3))<<16)
-#define HDA_SELGPIO ((!!((GPIO_PINS>>24)&0x7f))<<4)
+#define HDA_SELGPIO ((!!((GPIO_PINS>>24)&0x7f))*0x50)
 #define PWM_SELGPIO (((GPIO_PINS>>20)&0xf)<<12)
 #define I2C1_SELGPIO ((!!((GPIO_PINS>>18)&0x3))<<11)
 #define I2C0_SELGPIO ((!!((GPIO_PINS>>16)&0x3))<<10)
