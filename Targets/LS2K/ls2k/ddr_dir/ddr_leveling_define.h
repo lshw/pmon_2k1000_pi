@@ -1,3 +1,8 @@
+#ifdef LEVELING_CHECK_ALL_BITS
+#define LEVELING_CHECK_BITS 0xff
+#else
+#define LEVELING_CHECK_BITS 0x1
+#endif
 #define GET_NUMBER_OF_SLICES	\
     li      t0, 0x8;\
     lb	    a0, 0x1f2(t8);\
