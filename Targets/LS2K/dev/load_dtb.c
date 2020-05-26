@@ -129,16 +129,6 @@ static int check_pci_bridge_ok(void)
 		 if(data[5] != cpu_to_be32(0x100000) || data[6+5] != cpu_to_be32(0x1000))
 			return 0;
 		}
-
-		nodep = fdt_getprop (working_fdt, nodeoffset, (const char* )"bus-range", &len);
-		if(len <= 0) {
-			continue;	//dtb not set bus-range
-		}
-
-		memcpy(data, nodep, 2*4);
-		val =_pci_conf_read32(tag, 0x18);
-		if (data[0] != cpu_to_be32(val&0xff) || data[1] != cpu_to_be32((val>>16)&0xff))
-		return 0;
 	}
 	return 1;
 }
@@ -199,20 +189,6 @@ static int update_pci_bridge(void * ssp)
 		if (fdt_setprop(ssp, nodeoffset, "ranges", data, 12*4))
 		{
  			printf("set ranges error\n");
-		}
-
-		nodep = fdt_getprop (working_fdt, nodeoffset, (const char* )"bus-range", &len);
-		if(len <= 0) {
-			continue;	//dtb not set bus-range
-		}
-
-		memcpy(data, nodep, 2*4);
-		val =_pci_conf_read32(tag, 0x18);
-		data[0] = cpu_to_be32(val&0xff);
-		data[1] = cpu_to_be32((val>>16)&0xff);
-		if (fdt_setprop(ssp, nodeoffset, "bus-range", data, 2*4))
-		{
- 			printf("set bus-range error\n");
 		}
 	
 	}
