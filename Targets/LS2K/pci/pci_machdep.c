@@ -305,7 +305,7 @@ pci_sync_cache(p, adr, size, rw)
 int pci_get_busno(struct pci_device *pd, int bus)
 {
 	int ret = bus + 1;
-	if(!pd->pa.pa_bus)
+	if(!pci_probe_only && !pd->pa.pa_bus)
 	{
 		switch(pd->pa.pa_device)
 		{
