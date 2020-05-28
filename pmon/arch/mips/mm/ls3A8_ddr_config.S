@@ -1053,15 +1053,28 @@ wait_dram_init_done2:
     bgeu    t1, t5, 1f
     nop
 
-    sd      $0, 0x0(t1)
-    sd      $0, 0x8(t1)
-    sd      $0, 0x10(t1)
-    sd      $0, 0x18(t1)
-    sd      $0, 0x20(t1)
-    sd      $0, 0x28(t1)
-    sd      $0, 0x30(t1)
-    sd      $0, 0x38(t1)
-    daddu   t1, t1, 0x40
+    .set push
+    .set arch=loongson3a
+
+    gssq    $0,  $0, 0x0(t1)
+    gssq    $0,  $0, 0x10(t1)
+    gssq    $0,  $0, 0x20(t1)
+    gssq    $0,  $0, 0x30(t1)
+    gssq    $0,  $0, 0x40(t1)
+    gssq    $0,  $0, 0x50(t1)
+    gssq    $0,  $0, 0x60(t1)
+    gssq    $0,  $0, 0x70(t1)
+    gssq    $0,  $0, 0x80(t1)
+    gssq    $0,  $0, 0x90(t1)
+    gssq    $0,  $0, 0xa0(t1)
+    gssq    $0,  $0, 0xb0(t1)
+    gssq    $0,  $0, 0xc0(t1)
+    gssq    $0,  $0, 0xd0(t1)
+    gssq    $0,  $0, 0xe0(t1)
+    gssq    $0,  $0, 0xf0(t1)
+    .set pop
+
+    daddu   t1, t1, 0x100
     b       1b
     nop
 1:
