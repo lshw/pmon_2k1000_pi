@@ -151,6 +151,7 @@ void ad_err1(unsigned long *adr1, unsigned long *adr2, unsigned long good, unsig
 void mv_error(unsigned long *adr, unsigned long good, unsigned long bad);
 
 static void init_legacy_rtc(void);
+unsigned long long __raw__writeq(unsigned long long val, unsigned long long data);
 
 #ifdef INTERFACE_3A780E
 #define REV_ROW_LINE 560
@@ -2063,11 +2064,30 @@ syscall2=(void*)PnpWrite_w83627;
 syscall_addrtype=0;
 return 0;
 }
+#endif
+
+unsigned long long strtoull(const char *nptr,char **endptr,int base);
+int cmd_cpuexec(int argc, char **argv)
+{
+	unsigned long long pc;
+	int cpu;
+	cpu = (argc > 1)?strtoul(argv[1], 0, 0): 0;
+	pc = (argc > 2)?strtoull(argv[2], 0, 0): 0;
+
+	if (cpu < 4)
+		__raw__writeq(0x900000003ff01020ULL + cpu*0x100, pc);
+	else if (cpu < 8)
+		__raw__writeq(0x900010003ff01020ULL + (cpu -4 )*0x100, pc);
+	return 0;
+}
 
 static const Cmd Cmds[] =
 {
 	{"MyCmds"},
+#if defined(LS7A_LPC_DISABLE) && !LS7A_LPC_DISABLE
 	{"pnps",	"", 0, "select pnp ops for d1,m1 ", pnps, 0, 99, CMD_REPEAT},
+#endif
+	{"cpuexec",	"cpu pc", 0, "boot cpu from pc", cmd_cpuexec, 0, 99, CMD_REPEAT},
 	{0, 0}
 };
 
@@ -2078,5 +2098,4 @@ init_cmd()
 {
 	cmdlist_expand(Cmds, 1);
 }
-#endif
 
