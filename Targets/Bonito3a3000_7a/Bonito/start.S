@@ -1776,19 +1776,14 @@ idle1000:
 	bnez    a0, idle1000
 	nop
 
-	lw      t2, FN_OFF(t1)
+	ld      t2, FN_OFF(t1)
 	beqz    t2, waitforinit
 	nop
-	sw      zero, FN_OFF(t1)
+	sd      zero, FN_OFF(t1)
 
-	dli     t3, 0xffffffff00000000 
-	or      t2, t3
 
-	dli     t3, 0x9800000000000000 
 	ld      sp, SP_OFF(t1)
-	or      sp, t3
 	ld      gp, GP_OFF(t1)
-	or      gp, t3
 	ld      a1, A1_OFF(t1)
 
 	move	ra, t2
