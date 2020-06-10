@@ -260,6 +260,7 @@ void initmips(unsigned long long  raw_memsz)
 #define SHUT_VPU 0x40
 #define SHUT_CAM 0x80
 #define SHUT_SATA 0x10000
+#define SHUT_CORE1 0x20000
 	memcpy(&shutdev ,(char *)0xbfc00000 + NVRAM_OFFS + SHUTDEV_OFFS, 4);
 	if ((shutdev>>24) !=  0x5a) shutdev = 0;
 	else shutdev &= 0xffffff;
@@ -275,7 +276,7 @@ void initmips(unsigned long long  raw_memsz)
 			DPMCTR = (DPMCTR&~0xc)|4;
 			DPMCFG |= 2;
 		}
-		//#shutdevdown core1
+		//#shutdevdown core1 in start.S
 		//FREQSCALE1 &= ~FREQSCALE1_CORE1EN;
 		if (shutdev & SHUT_PCIE0) {
 			//#pcie0 low power
