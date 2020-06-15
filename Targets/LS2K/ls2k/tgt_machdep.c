@@ -2466,3 +2466,30 @@ struct efi_memory_map_loongson * init_memory_map()
 #endif
 	return emap;
 }
+
+unsigned long long strtoull(const char *nptr,char **endptr,int base);
+int cmd_cpuexec(int argc, char **argv)
+{
+	unsigned long long pc;
+	int cpu;
+	cpu = (argc > 1)?strtoul(argv[1], 0, 0): 0;
+	pc = (argc > 2)?strtoull(argv[2], 0, 0): 0;
+
+	__raw__writeq(0xffffffffbfe11020 + 0x100*1, pc);
+	return 0;
+}
+
+static const Cmd Cmds[] =
+{
+	{"MyCmds"},
+	{"cpuexec",	"pc", 0, "boot cpu 1 from pc", cmd_cpuexec, 0, 99, CMD_REPEAT},
+	{0, 0}
+};
+
+static void init_cmd __P((void)) __attribute__ ((constructor));
+
+static void
+init_cmd()
+{
+	cmdlist_expand(Cmds, 1);
+}
