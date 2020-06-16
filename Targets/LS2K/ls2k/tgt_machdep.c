@@ -232,7 +232,7 @@ void initmips(unsigned long long  raw_memsz)
 {
 	unsigned int hi;
 	unsigned long long memsz;
-	unsigned short i;
+	unsigned int i;
 	//core1 run wait_for_smp_call function in ram
 	asm volatile(".set mips64;sd %1,(%0);.set mips0;"::"r"(0xbfe11120),"r"(&wait_for_smp_call));
 #ifdef CONFIG_UART0_SPLIT
@@ -403,6 +403,19 @@ void initmips(unsigned long long  raw_memsz)
 #ifdef DTB
 	verify_dtb();
 #endif
+	/*
+	map highmem to 2G to support dma32
+	0xbfe10020 is old higmem window.
+	0xbfe10018 is a free window, use it remap highmem window to 2G.
+	*/
+	for(i=0xbfe10018;i!=0xbfe10040;i+=8) {
+		if (*(volatile long long *)(i+0x80) == 0)  {
+			*(volatile long long *)i = 0x80000000ULL;
+			*(volatile long long *)(i+0x40) = *(volatile long long *)0xbfe10060|0xffffffff80000000ULL;
+			*(volatile long long *)(i+0x80) = *(volatile long long *)0xbfe100a0;
+			break;
+		}
+	}
 
 	/*
 	 * Launch!
@@ -2213,19 +2226,6 @@ void ls_pcie_config_set(void)
 		map_gpu_addr();
 	}
 
-	/*
-	map highmem to 2G to support dma32
-	0xbfe10020 is old higmem window.
-	0xbfe10018 is a free window, use it remap highmem window to 2G.
-	*/
-	for(i=0xbfe10018;i!=0xbfe10040;i+=8) {
-		if (*(volatile long long *)(i+0x80) == 0)  {
-			*(volatile long long *)i = 0x80000000ULL;
-			*(volatile long long *)(i+0x40) = *(volatile long long *)0xbfe10060|0xffffffff80000000ULL;
-			*(volatile long long *)(i+0x80) = *(volatile long long *)0xbfe100a0;
-			break;
-		}
-	}
 }
 
 extern unsigned long long memorysize_total;
