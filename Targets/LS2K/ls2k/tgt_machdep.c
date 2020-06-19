@@ -373,7 +373,7 @@ void initmips(unsigned long long  raw_memsz)
 #ifdef DEBUG_BY_EJTAG
 	*(volatile int *)0xbfe10080 = 0x001000f0;
 #else
-	*(volatile int *)0xbfe10080 = 0x1fc00082;
+	*(volatile int *)0xbfe10080 = 0x1fc000d2;
 #endif
 #if NNAND
 #ifdef CONFIG_LS2K_NAND
