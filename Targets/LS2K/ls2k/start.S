@@ -152,6 +152,9 @@
 #define REMAP_DDR_DMA 0x00e00000 //0x80e00000 
 
 #endif
+#ifndef PCIE_LANE_FLIP
+#define PCIE_LANE_FLIP 0x300 /*pcie1 port0 rx, tx lane revert*/
+#endif
 
 	.set	noreorder
 	.globl	_start
@@ -744,7 +747,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204f
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*4)) & 3)
         sw      t1, 0x0(t0)
   
 //pcie1 port1
@@ -794,7 +797,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204c
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*5)) & 3)
         sw      t1, 0x0(t0)
   
 //pcie0 port0
@@ -844,7 +847,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204c
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*0)) & 3)
         sw      t1, 0x0(t0)
   
 //pcie0 port1
@@ -894,7 +897,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204c
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*1)) & 3)
         sw      t1, 0x0(t0)
   
 //pcie0 port2
@@ -938,7 +941,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204c
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*2)) & 3) 
         sw      t1, 0x0(t0)
   
 //pcie0 port3
@@ -982,7 +985,7 @@ cp0_main:
     and t2, t2, t1
     sw  t2, 0x58(t0)
 
-	dli	t1, 0xff204c
+	dli	t1, 0xff204c | ((PCIE_LANE_FLIP>>(2*3)) & 3)
         sw      t1, 0x0(t0)
 
 pcie_cfg_done:
