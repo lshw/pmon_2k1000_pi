@@ -891,6 +891,24 @@ int ls2h_m25p_probe()
 }
 #endif
 
+int cmd_spicmd(int argc, char **argv)
+{
+	int i;
+	int cs = strtoul(argv[1],0,0);
+	unsigned int d;
+	SET_SPI(SOFTCS, (0x10<<cs)^0xff);
+	for (i=2;i<argc;i++) {
+		d = strtoul((argv[i][0] == '-')?&argv[i][1]:argv[i],0,0);
+		SET_SPI(TXFIFO,d);
+		while((GET_SPI(SPSR))&RFEMPTY);
+		d = (unsigned char)GET_SPI(RXFIFO);
+		if (argv[i][0] != '-')
+			printf("%02x\n", d);
+	}
+	SET_SPI(SOFTCS, 0xff);
+	return 0;
+}
+
 //----------------------------------------
 
 
@@ -905,6 +923,7 @@ static const Cmd Cmds[] =
 	{"erase_all","",0,"erase_all(sst25vf080b)",erase_all,0,99,CMD_REPEAT},
 	{"write_pmon_byte","",0,"write_pmon_byte(sst25vf080b)",write_pmon_byte,0,99,CMD_REPEAT},
 	{"read_flash_id","",0,"read_flash_id(sst25vf080b)",spi_read_id,0,99,CMD_REPEAT},
+	{"spicmd","",0,"spicmd [cs] [[-]data]...",cmd_spicmd,3,99,CMD_REPEAT},
 	{0,0}
 };
 
