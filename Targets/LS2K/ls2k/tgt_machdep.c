@@ -324,8 +324,15 @@ void initmips(unsigned long long  raw_memsz)
 #endif
 #ifdef LS2K_SELLIO
 	*(volatile int *)0xbfe10424 |= (1<<31);
+#ifdef LIO_WIDTH16
+	*(volatile int *)0xbfe10424 |= ((1<<29)|(1<<23));
+#else
 	*(volatile int *)0xbfe10424 &= ~((1<<29)|(1<<23));
+#endif
 	*(volatile int *)0xbfe104d0 &= ~(0x700);
+#ifdef LIO_SPEED
+	*(volatile int *)0xbfe104d0 |= (LIO_SPEED<<8)&0x700;
+#endif
 #endif
 #ifdef LS2K_USE_CAN
 	*(volatile int *)0xbfe10420 |= (3<<16);
