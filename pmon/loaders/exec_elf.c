@@ -404,6 +404,7 @@ long
 
 	bootseg = 0;
 	myflags=flags;
+	lastaddr = 0;
 
 #ifdef __mips__
 	tablebase = PHYS_TO_CACHED(memorysize);
