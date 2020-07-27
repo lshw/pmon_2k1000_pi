@@ -3734,16 +3734,7 @@ void usb_ohci_stop_one(ohci_t * ohci)
 	writel(0, &ohci->regs->control);
 	writel(OHCI_HCR, &ohci->regs->cmdstatus);
 	(void)readl(&ohci->regs->cmdstatus);
-
-#if (defined LOONGSON_3A2H) || (defined LOONGSON_3C2H) || defined (LOONGSON_2K)
-	cmd = readl(&ohci->regs->control);
-	cmd &= (~0x7);
-	writel(cmd, ohci->regs->control);
-#else
-	cmd = readl(&ohci->regs->control);
-	cmd &= OHCI_CTRL_RWC;
-	writel(cmd, ohci->regs->control);
-#endif
+	delay(10);
 
 #ifndef LOONGSON_2K
 	if(ohci->pa.pa_id != -1) {
