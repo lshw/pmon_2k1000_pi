@@ -55,7 +55,7 @@
 int             repeating_cmd;
 
 unsigned int getln __P((char **, char *));
-static char *expand __P((char *));
+char *expand __P((char *));
 
 /*
  *  Execute command
@@ -214,7 +214,7 @@ do_cmd(p)
  * returns:
  *	pointer to static buffer containing expanded line.
  */
-static char *
+char *
 expand(cmdline)
 	char *cmdline;
 {

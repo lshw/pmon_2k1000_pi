@@ -601,10 +601,11 @@ main()
 	return(0);
 }
 
+char * expand(char *cmdline);
 #ifdef AUTOLOAD
 static int autoload(char *s)
 {
-	char buf[LINESZ];
+	char buf[LINESZ + 8];
 	char *pa;
 	char *rd;
 	unsigned int dly, lastt;
@@ -648,7 +649,7 @@ static int autoload(char *s)
 		if(cnt == 0) {
 	        if(getenv("autocmd"))
 			{
-			strcpy(buf,getenv("autocmd"));
+			strncpy(buf, expand(getenv("autocmd")), sizeof(buf));
 			do_cmd(buf);
 			}
 			rd= getenv("rd");
