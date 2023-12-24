@@ -160,6 +160,7 @@ extern int optind;
 #else
         printf ("PMON: %s\n", vers);
 #endif
+        printf ("GCC: %d.%d\n", __GNUC__, __GNUC_MINOR__);
 	if(aflag) {
 		tgt_cmd_vers();
 	}
