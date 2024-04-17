@@ -1,0 +1,8 @@
+*.hex
+*.o
+*.bin
+*.bak
+ld.script
+compile/
+tools/pmoncfg/pmoncfg
+*.orig
