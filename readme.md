@@ -1,7 +1,7 @@
 
-在debian5-debian12和ubuntu下，直接执行 
-build_ls2k.sh  一键编译龙芯2k_1000 pmon 
-在win的linux子系统下，也是可以的 
+在debian5-debian12和ubuntu下，直接执行   
+build_ls2k.sh  一键编译龙芯2k_1000 pmon   
+在win的linux子系统下，也是可以的   
 
 编译：  
  git clone https://github.com/lshw/pmon_2k1000_pi  
