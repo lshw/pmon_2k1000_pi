@@ -60,12 +60,14 @@
 		 * If you want to use the "hda" function,enable the "hda"
 		 * controller by configure general configuration register 0.
 		 */
-		/*hda@0x400d0000 {
+#ifdef SEL_HDA
+		hda@0x400d0000 {
 			compatible = "loongson,ls-audio";
 			reg = <0x400d0000 0xffff>;
 			interrupt-parent = <&icu>;
 			interrupts = <12>;
-		};*/
+		};
+#endif
 
 		dc@0x400c0000 {
 			compatible = "loongson,ls-fb";
@@ -358,6 +360,10 @@
 				compatible = "codec_uda1342";
 				reg = <0x1a>;
 			};
+			eeprom@50{
+				compatible = "eeprom-edid";
+				reg = <0x50>;
+			};
 
 		};
 
@@ -371,10 +377,12 @@
 			i2c-gpio,delay-us = <5>;	/* ~100 kHz */
 			#address-cells = <1>;
 			#size-cells = <0>;
+        /*
 			eeprom@50{
 				compatible = "dvi-eeprom-edid";
 				reg = <0x50>;
 			};
+        */
 		};
 
 		i2c_dvo1:i2c@3{
@@ -385,10 +393,12 @@
 			/*i2c-gpio,sda-open-drain;*/
 			/*i2c-gpio,scl-open-drain;*/
 			i2c-gpio,delay-us = <5>;	/* ~100 kHz */
+        /*
 			eeprom@50{
 				compatible = "eeprom-edid";
 				reg = <0x50>;
 			};
+        */
 			codec@1a{
 				compatible = "realtek,rt5651";
 				reg = <0x1a>;

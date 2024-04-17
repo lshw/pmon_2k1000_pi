@@ -39,6 +39,7 @@ file	sys/dev/nand/m25p80.c m25p80 & nand needs-flag
 file	Targets/LS2K/dev/i2c.c i2c
 file	Targets/LS2K/dev/9022a.c sii9022a needs-flag
 file	Targets/LS2K/dev/can_test.c can
+file	Targets/LS2K/dev/pai2.c 
 
 
 device	syn: ether, ifnet

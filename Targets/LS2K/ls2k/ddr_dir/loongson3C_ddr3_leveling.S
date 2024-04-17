@@ -512,6 +512,49 @@ wrdqs_adjust:
 #endif
 #endif
 
+	PRINTSTR("\r\nThe MC adjust:\r\n")
+	dli		t4, 8
+	dli		t1, 0x20
+	or		t1, t1, t8
+	move	a0, t1
+	bal     hexserial
+	nop
+	PRINTSTR("\r\n")
+1:	
+	daddiu  t4, t4, -1
+	beqz	t4, 81f
+	lbu		t2, OFFSET_DLL_WRDQS(t1) 
+	
+	move	a0, t2
+	bal     hexserial
+	nop
+	PRINTSTR("\r\n")
+
+	daddiu	t1, t1, 0x20
+	lbu		t3, OFFSET_DLL_WRDQS(t1)
+	
+	move	a0, t3
+	bal     hexserial
+	nop
+	PRINTSTR("\r\n")
+	PRINTSTR("\r\n")
+	
+	subu	t3, t3, t2
+	bgez	t3, 1b
+	nop
+	addiu	t3,	t2, 1
+
+	PRINTSTR("\r\nThe MC adjust:\r\n")
+	move	a0, t3
+	bal     hexserial
+	nop
+	PRINTSTR("\r\n")
+	PRINTSTR("\r\n")
+
+	sb		t3, OFFSET_DLL_WRDQS(t1)
+	bnez    t4, 1b
+	nop
+
 #if 0   //def  DEBUG_DDR_PARAM   //print registers
 	PRINTSTR("\r\nThe MC param after carefully adjust is:\r\n")
 	PRINT_THE_MC_PARAM

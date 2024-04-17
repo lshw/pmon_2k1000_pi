@@ -1203,7 +1203,7 @@ pcie_cfg_done:
 #endif
 #endif
 
-#if 0 /* Config SATA TX signal*/
+#if 1 /* Config SATA TX signal*/
         li      t0, 0xbfe10458
         dli     t1, 0x1403f1002
         sd      t1, 0x0(t0)
@@ -1320,7 +1320,7 @@ start_now:
 //#define DEBUG_AUTO_ARB_LEVEL
 #endif
 //#define  DISABLE_DDR_A15
-//#define DEBUG_DDR
+#define DEBUG_DDR
 //#define DEBUG_DDR_PARAM
 //#define PRINT_DDR_LEVELING
 //#define DLL_DELAY_LOOP

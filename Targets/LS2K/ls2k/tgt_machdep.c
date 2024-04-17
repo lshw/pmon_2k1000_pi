@@ -457,10 +457,17 @@ static void init_pcidev(void)
 #endif
 #endif
 	*(volatile unsigned int *)0xbfe10428 &= ~(1<<19); /*disable usb prefetch*/
+#ifdef UART0_ENABLE
+	*(volatile int *)0xbfe10428 |= 0xf; 
+#endif
 #ifdef ENABLE_ALL_SERIAL
 	*(volatile int *)0xbfe10428 |= 0x3fff; 
 #endif
 	_pci_devinit(1);	/* PCI device initialization */
+#ifdef PAI2
+	pai2_init();
+#endif
+
 #if (NMOD_X86EMU_INT10 > 0)||(NMOD_X86EMU >0)
 	if(pcie_dev != NULL){
 		SBD_DISPLAY("VGAI", 0);
