@@ -138,7 +138,7 @@ extern char _pmon_snap_trap;
 	}
 	else if (trace_mode == TRACE_NO) {	/* no bpts set */
 		printf ("\r\nBreakpoint reached while not in trace mode!\r\n");
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);
 	}
 	else if (trace_mode == TRACE_GB) {	/* go & break */
@@ -158,31 +158,31 @@ extern char _pmon_snap_trap;
 			for (i = 0; i < MAX_BPT; i++) {
 				if(Bpt[i].addr == (int)md_get_excpc(frame)) {
 					printf ("\r\nStopped at Bpt %d\n", i);
-					md_fpsave(cpuinfo);
+					//md_fpsave(cpuinfo);
 					pmon_stop (Bpt[i].cmdstr);
 				}
 			}
 		}
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);
 	}
 
 	remove_trace_breakpoint ();
 	if (trace_mode == TRACE_TB) {
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);		/* trace & break */
 	}
 	else if (trace_mode == TRACE_TN) {
 		for (i = 0; i < MAX_BPT; i++) {
 			if(Bpt[i].addr == (int)md_get_excpc(frame)) {
 				printf ("\r\nStopped at Bpt %d\r\n", i);
-				md_fpsave(cpuinfo);
+				//md_fpsave(cpuinfo);
 				pmon_stop (Bpt[i].cmdstr);
 			}
 		}
 		if(trace_invalid && !is_validpc(md_get_excpc(frame))) {
 			printf ("\r\nStopped: Invalid PC value\r\n");
-			md_fpsave(cpuinfo);
+			//md_fpsave(cpuinfo);
 			pmon_stop (0);
 		}
 		for (i = 0; i < STOPMAX; i++) {
@@ -207,7 +207,7 @@ extern char _pmon_snap_trap;
 					printf ("\r\nStopped: %s%s0x%08x\r\n", stopval[i].name,
 						p, stopval[i].value);
 				}
-				md_fpsave(cpuinfo);
+				//md_fpsave(cpuinfo);
 				pmon_stop (0);
 			}
 		}
@@ -253,7 +253,7 @@ extern char _pmon_snap_trap;
 			trace_mode = TRACE_TB;
 		}
 		if (setTrcbp (md_get_excpc(frame), trace_over)) {
-			md_fpsave(cpuinfo);
+			//md_fpsave(cpuinfo);
 			pmon_stop (0);
 		}
 		store_trace_breakpoint ();
@@ -291,7 +291,7 @@ extern char    *sbddbgintr(unsigned int);
 	}
 	else if (trace_mode == TRACE_NO) {	/* no bpts set */
 		printf ("\r\nBreakpoint reached while not in trace mode!\r\n");
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);
 	}
 	else if (trace_mode == TRACE_GB) {	/* go & break */
@@ -311,31 +311,31 @@ extern char    *sbddbgintr(unsigned int);
 			for (i = 0; i < MAX_BPT; i++) {
 				if(Bpt[i].addr == (int)md_get_excpc(frame)) {
 					printf ("\r\nStopped at Bpt %d\n", i);
-					md_fpsave(cpuinfo);
+					//md_fpsave(cpuinfo);
 					pmon_stop (Bpt[i].cmdstr);
 				}
 			}
 		}
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);
 	}
     
 	remove_trace_breakpoint ();
 	if (trace_mode == TRACE_TB) {
-		md_fpsave(cpuinfo);
+		//md_fpsave(cpuinfo);
 		pmon_stop (0);		/* trace & break */
 	}
 	else if (trace_mode == TRACE_TN) {
 		for (i = 0; i < MAX_BPT; i++) {
 			if(Bpt[i].addr == (int)md_get_excpc(frame)) {
 				printf ("\r\nStopped at Bpt %d\r\n", i);
-				md_fpsave(cpuinfo);
+				//md_fpsave(cpuinfo);
 				pmon_stop (Bpt[i].cmdstr);
 			}
 		}
 		if(trace_invalid && !is_validpc(md_get_excpc(frame))) {
 			printf ("\r\nStopped: Invalid PC value\r\n");
-			md_fpsave(cpuinfo);
+			//md_fpsave(cpuinfo);
 			pmon_stop (0);
 		}
 		for (i = 0; i < STOPMAX; i++) {
@@ -360,7 +360,7 @@ extern char    *sbddbgintr(unsigned int);
 					printf ("\r\nStopped: %s%s0x%08x\r\n", stopval[i].name,
 						p, stopval[i].value);
 				}
-				md_fpsave(cpuinfo);
+				//md_fpsave(cpuinfo);
 				pmon_stop (0);
 			}
 		}
@@ -394,7 +394,7 @@ extern char    *sbddbgintr(unsigned int);
 			trace_mode = TRACE_TB;
 		}
 		if (setTrcbp (md_get_excpc(frame), trace_over)) {
-			md_fpsave(cpuinfo);
+			//md_fpsave(cpuinfo);
 			pmon_stop (0);
 		}
 		store_trace_breakpoint ();

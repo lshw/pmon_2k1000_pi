@@ -375,6 +375,7 @@ END(exception_handler)
  *  Save/restore floating point registers.
  *  Call with a0 pointing at frame.
  */
+#if 0
 LEAF(md_fpsave)
 	mfc0	t1, COP_0_STATUS_REG
 	or	v0, t1, SR_COP_1_BIT|SR_FR_32
@@ -460,7 +461,6 @@ LEAF(md_fpsave)
 	j	ra
 	nop
 END(md_fpsave)
-
 LEAF(md_fprestore)
 	mfc0	t1, COP_0_STATUS_REG
 	or	v0, t1, SR_COP_1_BIT|SR_FR_32
@@ -510,7 +510,7 @@ LEAF(md_fprestore)
 	j	ra
 	nop
 END(md_fprestore)
-
+#endif
 /*
  *  Get CP0 count register value
  */
