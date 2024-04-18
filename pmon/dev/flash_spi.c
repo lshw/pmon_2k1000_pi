@@ -431,7 +431,7 @@ void gpio_cs_init (void)
  * set gpio output value for godson3a
  */
 
-inline void set_cs (int bit)
+void set_cs (int bit)
 {
 #ifdef LS3B_SPI_BOOT
 #define CSCTLOFFCHIPERASET  0x5
@@ -475,7 +475,7 @@ __attribute__ ((section ("text"), aligned (512)));
 static unsigned char tbuf[256]
 __attribute__ ((section ("text")));
 
-static inline unsigned char flash_writeb_cmd (unsigned char value)
+static unsigned char flash_writeb_cmd (unsigned char value)
 {
 	unsigned char ret;
 
@@ -489,7 +489,7 @@ static inline unsigned char flash_writeb_cmd (unsigned char value)
 	return ret;
 }
 
-static inline unsigned char flash_read_data (void)
+static unsigned char flash_read_data (void)
 {
 	unsigned char ret;
 

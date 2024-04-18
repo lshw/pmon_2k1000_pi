@@ -580,7 +580,7 @@ void w_window(int x,int y,int w,int h,char *text)
 	}
 }
 
-inline int dist(int a1,int a2,int b1,int b2)//called by next fun
+int dist(int a1,int a2,int b1,int b2)//called by next fun
 {
 	if(b2>a1)
 		if(b1<a2)
